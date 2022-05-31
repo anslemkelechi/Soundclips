@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+    <div class="preloader">
+        <div class="preloader-box">
+            <img src="img/pre.gif" alt="preloader">
+        </div>
+    </div>
       <div class="mob-back">
   </div>
   <div class="active hid open">
@@ -43,13 +48,13 @@
           </div>
       </nav>
       <!-- Music Template -->
-      <div class="music-container">
+      <div class="music-container" id="0">
 
          <div class="music-tab">
 
           <div class="grid-a">
               <div class="music-cover">
-                  <img src="img/cover-0.jpg" alt="music-cover-for-">
+                  <img src="img/cover/cover-0.jpg" class="music-cover__img" alt="music-cover-for-">
                   <div class="music-action">
                       <ul>
                           <li><i class="fa-regular fa-heart"></i></li>
@@ -77,9 +82,7 @@
                       <span class="scroll"></span>
                   </div>
                   <div class="music-desc">
-                      <p>"Rider” is the twenty-first and second to last track from Juice WRLD’s sophomore album Death Race For Love.
-On the Power-produced track, Juice raps about drugs, as well as wanting to see if his girlfriend, Ally Lotti’s, love is genuine.
-The track was previewed on Juice WRLD’s Instagram Live on March 5, 2019, three days before the album’s official release.</p>
+                      <p class="desc-text"></p>
                   </div>
               </div>
           </div>
@@ -91,7 +94,7 @@ The track was previewed on Juice WRLD’s Instagram Live on March 5, 2019, three
   <div class="footer">
        <div class="bottom-nav">
           <div class="side-left">
-         <p><i class="fa-solid fa-angle-left"></i>Prev</p>
+         <p class="prev-btn"><i class="fa-solid fa-angle-left"></i>Prev</p>
       </div>
           <ul>
               <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
@@ -99,7 +102,7 @@ The track was previewed on Juice WRLD’s Instagram Live on March 5, 2019, three
               <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
           </ul>
           <div class="side-right">
-            <p>Next<i class="fa-solid fa-angle-right"></i></p>
+            <p class="next-btn">Next<i class="fa-solid fa-angle-right"></i></p>
           </div>
         </div>
         </div>
