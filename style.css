@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;400&display=swap');
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 65.5%;
+}
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: linear-gradient(
+    to bottom right,
+    #c9ffbf75 0%,
+    #ffafbd57 50%,
+    #d187dda1 80%
+  );
+}
+.header {
+  height: 100vh;
+  position: relative;
+}
+.navigation,
+.bottom-nav {
+  display: grid;
+  width: 90%;
+  margin: 0 auto;
+  grid-template-columns: 10% 2fr 10%;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0rem;
+}
+.logo-box,
+.side-left {
+  width: 6rem;
+  justify-self: start;
+}
+.logo-box h3 {
+  font-size: 2.5rem;
+}
+.navigation ul,
+.bottom-nav ul {
+  list-style: none;
+  justify-self: center;
+}
+.navigation ul li,
+.bottom-nav ul li {
+  display: inline-block;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+}
+.navigation ul li:not(:last-child),
+.bottom-nav ul li:not(:last-child) {
+  margin-right: 2rem;
+}
+.navigation ul li a,
+.bottom-nav ul li a {
+  text-decoration: none;
+  color: #222;
+  translate: all 0.3s;
+}
+.navigation ul li a:hover,
+.bottom-nav ul li a:hover {
+  opacity: 0.7;
+  translate: all 0.3s;
+}
+.search,
+.side-right {
+  justify-self: end;
+}
+.side-right {
+  width: 6rem;
+}
+.side-right p,
+.side-left p {
+  font-size: 2rem;
+}
+.search i,
+.side-right i {
+  font-size: 2.5rem;
+  translate: all 0.3s;
+}
+.search i:hover,
+.side-right i:hover {
+  opacity: 0.7;
+  translate: all 0.3s;
+}
+
+/* Music Template */
+.music-container {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+.music-tab {
+  font-family: 'Raleway', sans-serif;
+  display: grid;
+  grid-template-columns: repeat(2, 2fr);
+  width: 75%;
+  margin: auto;
+  justify-content: center;
+}
+.grid-a {
+  justify-self: center;
+  align-content: flex-end;
+}
+.music-cover {
+  width: 100%;
+  z-index: 100;
+}
+.music-cover img {
+  border-radius: 40px;
+  width: 100%;
+  /* box-shadow: 0px 8px 20px 6px rgb(0 0 0 / 86%); */
+}
+.music-action {
+  padding: 2rem 3rem;
+}
+.music-action ul {
+  list-style: none;
+  text-align: center;
+}
+.music-action ul li {
+  display: inline-block;
+  font-size: 2.5rem;
+}
+.music-action ul li:not(:last-child) {
+  margin-right: 2.5rem;
+}
+
+.grid-b {
+  justify-self: start;
+}
+.music-content {
+}
+.music-header {
+  margin-bottom: 4rem;
+}
+.music-header .main-header {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+}
+.music-header .sub-header {
+  font-size: 2rem;
+}
+.music-control {
+  background-color: #fff;
+  padding: 6.8rem 4rem;
+  margin-bottom: 4rem;
+  position: relative;
+  border-radius: 40px;
+}
+.music-control::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: -40%;
+  z-index: -1;
+}
+.music-control ul {
+  list-style: none;
+}
+.music-control ul li {
+  display: inline-block;
+  font-size: 2rem;
+  color: #686565;
+}
+.music-control ul li:not(:last-child) {
+  margin-right: 5rem;
+}
+.music-desc p {
+  color: #686565;
+  letter-spacing: 1.2px;
+  font-size: 1.4rem;
+}
+/* End Music Template */
+
+.footer {
+  margin-top: -5rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .music-tab {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 50%;
+  }
+  .header {
+    height: 140vh;
+  }
+  .navigation {
+    display: none;
+  }
+  .music-tab {
+    grid-template-columns: repeat(1, 1fr);
+    width: 90%;
+  }
+  .music-header {
+    text-align: center;
+  }
+  .music-control ul {
+    text-align: center;
+  }
+  .music-control {
+    padding: 4rem 1rem;
+  }
+  .music-control ul li:not(:last-child) {
+    margin-right: 4rem;
+  }
+  .music-control::after {
+    display: none;
+  }
+  .music-desc {
+    text-align: center;
+  }
+  .footer {
+    margin-top: 5rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .header {
+    height: 100vh;
+    
+  }
+  .music-desc p{
+      color:#eee;
+  }
+}
