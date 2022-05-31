@@ -342,6 +342,9 @@ div.active {
     grid-template-columns: repeat(1, 1fr);
     width: 90%;
   }
+  .music-cover::after {
+    display: none;
+  }
   .music-cover img {
     border-radius: 40px;
     width: 100%;
