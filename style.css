@@ -137,8 +137,7 @@ body {
 .grid-b {
   justify-self: start;
 }
-.music-content {
-}
+
 .music-header {
   margin-bottom: 4rem;
 }
@@ -235,6 +234,6 @@ body {
     
   }
   .music-desc p{
-      color:#eee;
+      color:#222;
   }
 }
