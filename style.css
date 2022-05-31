@@ -190,7 +190,7 @@ div.active {
   justify-content: center;
 }
 .grid-a {
-  justify-self: center;
+  justify-self: flex-start;
   align-content: flex-end;
 }
 .music-cover {
@@ -233,9 +233,6 @@ div.active {
 .grid-b {
   justify-self: start;
 }
-.music-content {
-  padding: 0rem 2rem;
-}
 .music-header {
   margin-bottom: 4rem;
 }
@@ -260,12 +257,11 @@ div.active {
   background-color: #fff;
   position: absolute;
   top: 0;
-  left: -40%;
+  left: -60%;
   z-index: -1;
 }
 .music-control ul {
   list-style: none;
-  text-align: center;
 }
 .music-control ul li {
   display: inline-block;
@@ -290,6 +286,14 @@ div.active {
   cursor: pointer;
 }
 /* MEDIA QEURIES */
+@media screen and (min-width: 1800px) {
+  .music-tab {
+    width: 70%;
+  }
+  .grid-a {
+    justify-self: center;
+  }
+}
 @media screen and (max-width: 1200px) {
   .music-tab {
     width: 90%;
@@ -341,6 +345,9 @@ div.active {
   .music-tab {
     grid-template-columns: repeat(1, 1fr);
     width: 90%;
+  }
+  .grid-a {
+    justify-self: center;
   }
   .music-cover::after {
     display: none;
