@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;400&display=swap');
+@keyframes scale {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 *,
 ::before,
 ::after {
@@ -26,7 +36,7 @@ body {
   height: 100vh;
   width: 100%;
   z-index: 500;
-  background: linear-gradient(to bottom right, #fff, #fffcdc);
+  background: linear-gradient(to bottom right, #fff, #f5f5f5);
   transition: all 0.3s;
 }
 .preloader-box {
@@ -189,6 +199,12 @@ div.active {
   margin: auto;
   justify-content: center;
 }
+.music-animation {
+  animation-name: scale;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  transition: all 2s;
+}
 .grid-a {
   justify-self: flex-start;
   align-content: flex-end;
@@ -267,6 +283,7 @@ div.active {
   display: inline-block;
   font-size: 2rem;
   color: #686565;
+  cursor: pointer;
 }
 .music-control ul li:not(:last-child) {
   margin-right: 5rem;

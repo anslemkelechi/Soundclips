@@ -43,19 +43,31 @@ window.onload = () => {
 // MEDIA TEMPLATE
 
 /* Initial Variables */
+let musicPlayer = document.querySelector('.music-tab')
 let mainHeader = document.querySelector('.main-header')
 let subHeader = document.querySelector('.sub-header')
 let desc = document.querySelector('.desc-text')
 let musicCover = document.querySelector('.music-cover__img')
 let musicID = document.querySelector('.music-container')
+let audioSrc = document.querySelector('.audio-src')
 let prevBtn = document.querySelector('.prev-btn')
 let nextBtn = document.querySelector('.next-btn')
+
+/*Media Buttons */
+let media = document.querySelector('.audio')
+let play = document.querySelector('.play')
+let repeat = document.querySelector('.repeat')
+let rwd = document.querySelector('.rwd')
+let fwd = document.querySelector('.fwd')
+let random = document.querySelector('.random')
+let intervalFwd
+let intervalRwd
 
 /* MEDIA ARRAY*/
 musicTab = [
   {
     id: 0,
-    name: 'Ringer',
+    name: 'Rider',
     artist: 'Juice Wlrd',
     desc: `"Rider” is the twenty-first and second to last track from Juice WRLD’s sophomore album Death Racse For Love.
                     On the Power-produced track, Juice raps about drugs, as well as wanting to see if his girlfriend, Ally Lotti’s, love is genuine.
@@ -189,6 +201,14 @@ The track samples Canada-based Indonesian duo The Macarons Project’s 2017 rend
   },
 ]
 
+/*Player Animation */
+function scaleAnimation() {
+  musicPlayer.classList.toggle('music-animation')
+}
+function restoreDefaultAni() {
+  musicPlayer.classList.remove('music-animation')
+}
+
 /* Set Initial Default Function*/
 function setDefaultID(mTab, ID) {
   // 1. Get first item in our array
@@ -209,6 +229,12 @@ function setContent(id) {
   desc.textContent = id.desc
   musicCover.src = id.img()
   musicID.id = id.id
+  audioSrc.src = id.media()
+  media.load()
+  scaleAnimation()
+  setTimeout(() => {
+    restoreDefaultAni()
+  }, 3000)
 }
 
 /*Call Set Content for default state */
@@ -221,6 +247,7 @@ function nextMedia() {
   if (nextItemID <= x) {
     let nextObj = setDefaultID(musicTab, nextItemID)
     setContent(nextObj)
+    restoreMediaPlayer()
   }
 }
 /*Prev Media Function */
@@ -229,6 +256,7 @@ function prevMedia() {
     let prevItemID = Number(musicID.id) - 1
     let prevObj = setDefaultID(musicTab, prevItemID)
     setContent(prevObj)
+    restoreMediaPlayer()
   }
 }
 
@@ -237,3 +265,87 @@ nextBtn.addEventListener('click', nextMedia)
 
 /*Event Listener For Prev Button */
 prevBtn.addEventListener('click', prevMedia)
+
+/*Media Functions */
+function pausePlayMedia() {
+  if (media.paused) {
+    media.play()
+    play.childNodes[0].classList.toggle('fa-play')
+    play.childNodes[0].classList.toggle('fa-pause')
+  } else {
+    media.pause()
+    play.childNodes[0].classList.toggle('fa-play')
+    play.childNodes[0].classList.toggle('fa-pause')
+  }
+}
+
+function restoreMediaPlayer() {
+  play.childNodes[0].classList.add('fa-play')
+  play.childNodes[0].classList.remove('fa-pause')
+}
+
+function repeatSong() {
+  if (media.paused) {
+    media.play()
+    media.currentTime = 0
+    play.childNodes[0].classList.toggle('fa-play')
+    play.childNodes[0].classList.toggle('fa-pause')
+  } else {
+    media.currentTime = 0
+    play.childNodes[0].classList.remove('fa-play')
+    play.childNodes[0].classList.add('fa-pause')
+  }
+}
+
+function mediaBackward() {
+  clearInterval(intervalRwd)
+  fwd.classList.remove('running')
+
+  if (rwd.classList.contains('running')) {
+    rwd.classList.remove('running')
+    clearInterval(intervalFwd)
+    media.play()
+  } else {
+    rwd.classList.add('running')
+    media.pause()
+    intervalRwd = setInterval(playBack, 200)
+  }
+}
+function mediaForward() {
+  clearInterval(intervalRwd)
+  rwd.classList.remove('running')
+
+  if (fwd.classList.contains('running')) {
+    fwd.classList.remove('running')
+    clearInterval(intervalFwd)
+    media.play()
+  } else {
+    fwd.classList.add('running')
+    media.pause()
+    intervalFwd = setInterval(playForward, 200)
+  }
+}
+/*Interval Functions */
+function playBack() {
+  if (media.currentTime <= 3) {
+    rwd.classList.remove('running')
+    clearInterval(intervalRwd)
+    media.pause()
+  } else {
+    media.currentTime -= 3
+  }
+}
+function playForward() {
+  if (media.currentTime >= media.duration - 3) {
+    fwd.classList.remove('running')
+    clearInterval(intervalFwd)
+    media.pause()
+  } else {
+    media.currentTime += 3
+  }
+}
+/*Add Media Event Listeners */
+play.addEventListener('click', pausePlayMedia)
+fwd.addEventListener('click', mediaForward)
+rwd.addEventListener('click', mediaBackward)
+repeat.addEventListener('click', repeatSong)
