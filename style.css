@@ -336,15 +336,6 @@ div.active {
     left: 50%;
     transform: translateX(-50%);
   }
-  .mob-back {
-    background: linear-gradient(to bottom left, #d9a7c7, #fffcdc);
-    width: 100%;
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    z-index: 200;
-    transition: all 0.5s;
-  }
   .nav ul {
     display: none;
   }
