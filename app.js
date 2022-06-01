@@ -16,15 +16,6 @@ close.addEventListener('click', () => {
   close.classList.toggle('active')
 })
 
-window.onscroll = () => {
-  if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-    mobBack.style.height = '10%'
-    mobBack.style.transition = 'all 0.5s'
-  } else {
-    mobBack.style.height = '0%'
-    mobBack.style.transition = 'all 0.5s'
-  }
-}
 // END OF MOBILE NAVIGATION
 
 // PRELOADER
@@ -349,3 +340,8 @@ play.addEventListener('click', pausePlayMedia)
 fwd.addEventListener('click', mediaForward)
 rwd.addEventListener('click', mediaBackward)
 repeat.addEventListener('click', repeatSong)
+
+/*checking if a song is done playing */
+if (media.currentTime == media.duration) {
+  restoreMediaPlayer()
+}
