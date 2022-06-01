@@ -39,10 +39,12 @@ let mainHeader = document.querySelector('.main-header')
 let subHeader = document.querySelector('.sub-header')
 let desc = document.querySelector('.desc-text')
 let musicCover = document.querySelector('.music-cover__img')
+let musicCoverCD = document.querySelector('.music')
 let musicID = document.querySelector('.music-container')
 let audioSrc = document.querySelector('.audio-src')
 let prevBtn = document.querySelector('.prev-btn')
 let nextBtn = document.querySelector('.next-btn')
+let table = document.querySelector('.table')
 
 /*Media Buttons */
 let media = document.querySelector('.audio')
@@ -225,7 +227,7 @@ function setContent(id) {
   scaleAnimation()
   setTimeout(() => {
     restoreDefaultAni()
-  }, 3000)
+  }, 3500)
 }
 
 /*Call Set Content for default state */
@@ -258,6 +260,13 @@ nextBtn.addEventListener('click', nextMedia)
 prevBtn.addEventListener('click', prevMedia)
 
 /*Media Functions */
+function randomSong() {
+  let randID = Math.floor(Math.random() * 11)
+  let randObj = setDefaultID(musicTab, randID)
+  setContent(randObj)
+  restoreMediaPlayer()
+}
+
 function pausePlayMedia() {
   if (media.paused) {
     media.play()
@@ -288,60 +297,77 @@ function repeatSong() {
   }
 }
 
-function mediaBackward() {
-  clearInterval(intervalRwd)
-  fwd.classList.remove('running')
+// function mediaBackward() {
+//   clearInterval(intervalRwd)
+//   fwd.classList.remove('running')
+//   fwd.style.opacity = '1'
 
-  if (rwd.classList.contains('running')) {
-    rwd.classList.remove('running')
-    clearInterval(intervalFwd)
-    media.play()
-  } else {
-    rwd.classList.add('running')
-    media.pause()
-    intervalRwd = setInterval(playBack, 200)
-  }
-}
-function mediaForward() {
-  clearInterval(intervalRwd)
-  rwd.classList.remove('running')
+//   if (rwd.classList.contains('running')) {
+//     rwd.classList.remove('running')
+//     rwd.style.opacity = '1'
+//     clearInterval(intervalFwd)
+//     media.play()
+//     play.childNodes[0].classList.remove('fa-play')
+//     play.childNodes[0].classList.add('fa-pause')
+//   } else {
+//     rwd.classList.add('running')
+//     rwd.style.opacity = '0.7'
+//     media.pause()
+//     intervalRwd = setInterval(playBack, 200)
+//     play.childNodes[0].classList.add('fa-play')
+//     play.childNodes[0].classList.remove('fa-pause')
+//   }
+// }
+// function mediaForward() {
+//   clearInterval(intervalRwd)
+//   rwd.classList.remove('running')
+//   rwd.style.opacity = '1'
 
-  if (fwd.classList.contains('running')) {
-    fwd.classList.remove('running')
-    clearInterval(intervalFwd)
-    media.play()
-  } else {
-    fwd.classList.add('running')
-    media.pause()
-    intervalFwd = setInterval(playForward, 200)
-  }
-}
+//   if (fwd.classList.contains('running')) {
+//     fwd.classList.remove('running')
+//     clearInterval(intervalFwd)
+//     fwd.style.opacity = '1'
+//     media.play()
+//   } else {
+//     fwd.classList.add('running')
+//     fwd.style.opacity = '0.7'
+//     media.pause()
+//     intervalFwd = setInterval(playForward, 200)
+//     play.childNodes[0].classList.add('fa-play')
+//     play.childNodes[0].classList.remove('fa-pause')
+//   }
+// }
 /*Interval Functions */
-function playBack() {
-  if (media.currentTime <= 3) {
-    rwd.classList.remove('running')
-    clearInterval(intervalRwd)
-    media.pause()
-  } else {
-    media.currentTime -= 3
-  }
-}
-function playForward() {
-  if (media.currentTime >= media.duration - 3) {
-    fwd.classList.remove('running')
-    clearInterval(intervalFwd)
-    media.pause()
-  } else {
-    media.currentTime += 3
-  }
-}
+
+// function playBack() {
+//   if (media.currentTime <= 3) {
+//     rwd.classList.remove('running')
+//     clearInterval(intervalRwd)
+//     media.pause()
+//   } else {
+//     media.currentTime -= 3
+//   }
+// }
+// function playForward() {
+//   if (media.currentTime >= media.duration - 3) {
+//     fwd.classList.remove('running')
+//     clearInterval(intervalFwd)
+//     media.pause()
+//   } else {
+//     media.currentTime += 3
+//   }
+// }
+
 /*Add Media Event Listeners */
 play.addEventListener('click', pausePlayMedia)
-fwd.addEventListener('click', mediaForward)
-rwd.addEventListener('click', mediaBackward)
+fwd.addEventListener('click', nextMedia)
+rwd.addEventListener('click', prevMedia)
 repeat.addEventListener('click', repeatSong)
+random.addEventListener('click', randomSong)
 
 /*checking if a song is done playing */
-if (media.currentTime == media.duration) {
-  restoreMediaPlayer()
-}
+setInterval(() => {
+  if (media.currentTime == media.duration) {
+    nextMedia()
+  }
+}, 5000)

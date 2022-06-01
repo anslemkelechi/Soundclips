@@ -99,7 +99,7 @@ div.mobile-nav {
 }
 
 div.active {
-  position: fixed;
+  position: absolute;
   top: 1%;
   right: 5%;
   z-index: 300;
@@ -241,6 +241,7 @@ div.active {
 .music-action ul li {
   display: inline-block;
   font-size: 2.5rem;
+  color: #222;
 }
 .music-action ul li:not(:last-child) {
   margin-right: 2.5rem;
@@ -302,6 +303,41 @@ div.active {
 .side-right {
   cursor: pointer;
 }
+/* Library Page */
+.lib-container {
+  position: absolute;
+  width: 80%;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom right, #fff, #f5f5f5);
+}
+.table {
+  width: 100%;
+}
+.lib-img {
+  width: 5%;
+}
+.lib-img img {
+  width: 100%;
+}
+.lib-header h3 {
+  font-size: 2rem;
+  margin-left: 2.5rem;
+}
+.lib-action-play,
+.lib-action-fav {
+  width: 5%;
+  text-align: center;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.lib-action-play:hover,
+.lib-action-fav:hover {
+  opacity: 0.7;
+  transition: all 0.3s;
+}
 /* MEDIA QEURIES */
 @media screen and (min-width: 1800px) {
   .music-tab {
@@ -324,13 +360,13 @@ div.active {
   .logo-box,
   .search {
     padding: 1.5rem 2rem;
-    position: fixed;
+    position: absolute;
     z-index: 250;
     top: 1%;
     left: 5%;
   }
   .search {
-    position: fixed;
+    position: absolute;
     z-index: 250;
     top: 1%;
     left: 50%;
@@ -368,6 +404,9 @@ div.active {
   .music-header {
     text-align: center;
   }
+  .music-action ul li:not(:last-child) {
+    margin-right: 4rem;
+  }
   .grid-b {
     justify-self: center;
   }
@@ -389,6 +428,21 @@ div.active {
   .footer {
     margin-top: 5rem;
   }
+
+  /* Library */
+  .table {
+    padding: 2rem 1rem;
+  }
+  .lib-img {
+    width: 10%;
+  }
+  .lib-header {
+    margin-left: 1rem;
+  }
+  .lib-action-play,
+  .lib-action-fav {
+    width: 15%;
+  }
 }
 @media screen and (max-width: 480px) {
   html {
@@ -399,5 +453,11 @@ div.active {
   }
   .music-desc p {
     color: #222;
+  }
+  .music-cover {
+    width: 250px;
+  }
+  .music-control ul li {
+    font-size: 2.5rem;
   }
 }
