@@ -227,7 +227,7 @@ function setContent(id) {
   scaleAnimation()
   setTimeout(() => {
     restoreDefaultAni()
-  }, 3500)
+  }, 1500)
 }
 
 /*Call Set Content for default state */
