@@ -194,180 +194,194 @@ The track samples Canada-based Indonesian duo The Macarons Project’s 2017 rend
   },
 ]
 
-/*Player Animation */
-function scaleAnimation() {
-  musicPlayer.classList.toggle('music-animation')
-}
-function restoreDefaultAni() {
-  musicPlayer.classList.remove('music-animation')
-}
+if (musicID) {
+  /*Player Animation */
+  function scaleAnimation() {
+    musicPlayer.classList.toggle('music-animation')
+  }
+  function restoreDefaultAni() {
+    musicPlayer.classList.remove('music-animation')
+  }
 
-/* Set Initial Default Function*/
-function setDefaultID(mTab, ID) {
-  // 1. Get first item in our array
-  let Item = mTab[ID]
-  return Item
-}
+  /* Set Initial Default Function*/
+  function setDefaultID(mTab, ID) {
+    // 1. Get first item in our array
+    let Item = mTab[ID]
+    return Item
+  }
 
-/* Call Set Default Function */
-let firstItemID = musicID.id
-let item = setDefaultID(musicTab, firstItemID)
-console.log(item)
+  /* Call Set Default Function */
+  let firstItemID = musicID.id
+  let item = setDefaultID(musicTab, firstItemID)
 
-/*Content Setter Function */
-function setContent(id) {
-  // Use the object content to populate the Html DOM
-  mainHeader.textContent = id.name
-  subHeader.textContent = id.artist
-  desc.textContent = id.desc
-  musicCover.src = id.img()
-  musicID.id = id.id
-  audioSrc.src = id.media()
-  media.load()
-  scaleAnimation()
-  setTimeout(() => {
-    restoreDefaultAni()
-  }, 1500)
-}
+  /*Content Setter Function */
+  function setContent(id) {
+    // Use the object content to populate the Html DOM
+    mainHeader.textContent = id.name
+    subHeader.textContent = id.artist
+    desc.textContent = id.desc
+    musicCover.src = id.img()
+    musicID.id = id.id
+    audioSrc.src = id.media()
+    media.load()
+    scaleAnimation()
+    setTimeout(() => {
+      restoreDefaultAni()
+    }, 1500)
+  }
 
-/*Call Set Content for default state */
-setContent(item)
+  /*Call Set Content for default state */
+  setContent(item)
 
-/*Next Media Function */
-function nextMedia() {
-  let nextItemID = Number(musicID.id) + 1
-  var x = musicTab.length - 1
-  if (nextItemID <= x) {
-    let nextObj = setDefaultID(musicTab, nextItemID)
-    setContent(nextObj)
+  /*Next Media Function */
+  function nextMedia() {
+    let nextItemID = Number(musicID.id) + 1
+    var x = musicTab.length - 1
+    if (nextItemID <= x) {
+      let nextObj = setDefaultID(musicTab, nextItemID)
+      setContent(nextObj)
+      restoreMediaPlayer()
+    }
+  }
+  /*Prev Media Function */
+  function prevMedia() {
+    if (musicID.id > 0) {
+      let prevItemID = Number(musicID.id) - 1
+      let prevObj = setDefaultID(musicTab, prevItemID)
+      setContent(prevObj)
+      restoreMediaPlayer()
+    }
+  }
+
+  /*Event Listener For Next Button */
+  nextBtn.addEventListener('click', nextMedia)
+
+  /*Event Listener For Prev Button */
+  prevBtn.addEventListener('click', prevMedia)
+
+  /*Media Functions */
+  function randomSong() {
+    let randID = Math.floor(Math.random() * 11)
+    let randObj = setDefaultID(musicTab, randID)
+    setContent(randObj)
     restoreMediaPlayer()
   }
-}
-/*Prev Media Function */
-function prevMedia() {
-  if (musicID.id > 0) {
-    let prevItemID = Number(musicID.id) - 1
-    let prevObj = setDefaultID(musicTab, prevItemID)
-    setContent(prevObj)
-    restoreMediaPlayer()
+
+  function pausePlayMedia() {
+    if (media.paused) {
+      media.play()
+      play.childNodes[0].classList.toggle('fa-play')
+      play.childNodes[0].classList.toggle('fa-pause')
+    } else {
+      media.pause()
+      play.childNodes[0].classList.toggle('fa-play')
+      play.childNodes[0].classList.toggle('fa-pause')
+    }
   }
-}
 
-/*Event Listener For Next Button */
-nextBtn.addEventListener('click', nextMedia)
-
-/*Event Listener For Prev Button */
-prevBtn.addEventListener('click', prevMedia)
-
-/*Media Functions */
-function randomSong() {
-  let randID = Math.floor(Math.random() * 11)
-  let randObj = setDefaultID(musicTab, randID)
-  setContent(randObj)
-  restoreMediaPlayer()
-}
-
-function pausePlayMedia() {
-  if (media.paused) {
-    media.play()
-    play.childNodes[0].classList.toggle('fa-play')
-    play.childNodes[0].classList.toggle('fa-pause')
-  } else {
-    media.pause()
-    play.childNodes[0].classList.toggle('fa-play')
-    play.childNodes[0].classList.toggle('fa-pause')
+  function restoreMediaPlayer() {
+    play.childNodes[0].classList.add('fa-play')
+    play.childNodes[0].classList.remove('fa-pause')
   }
-}
 
-function restoreMediaPlayer() {
-  play.childNodes[0].classList.add('fa-play')
-  play.childNodes[0].classList.remove('fa-pause')
-}
-
-function repeatSong() {
-  if (media.paused) {
-    media.play()
-    media.currentTime = 0
-    play.childNodes[0].classList.toggle('fa-play')
-    play.childNodes[0].classList.toggle('fa-pause')
-  } else {
-    media.currentTime = 0
-    play.childNodes[0].classList.remove('fa-play')
-    play.childNodes[0].classList.add('fa-pause')
+  function repeatSong() {
+    if (media.paused) {
+      media.play()
+      media.currentTime = 0
+      play.childNodes[0].classList.toggle('fa-play')
+      play.childNodes[0].classList.toggle('fa-pause')
+    } else {
+      media.currentTime = 0
+      play.childNodes[0].classList.remove('fa-play')
+      play.childNodes[0].classList.add('fa-pause')
+    }
   }
+
+  // function mediaBackward() {
+  //   clearInterval(intervalRwd)
+  //   fwd.classList.remove('running')
+  //   fwd.style.opacity = '1'
+
+  //   if (rwd.classList.contains('running')) {
+  //     rwd.classList.remove('running')
+  //     rwd.style.opacity = '1'
+  //     clearInterval(intervalFwd)
+  //     media.play()
+  //     play.childNodes[0].classList.remove('fa-play')
+  //     play.childNodes[0].classList.add('fa-pause')
+  //   } else {
+  //     rwd.classList.add('running')
+  //     rwd.style.opacity = '0.7'
+  //     media.pause()
+  //     intervalRwd = setInterval(playBack, 200)
+  //     play.childNodes[0].classList.add('fa-play')
+  //     play.childNodes[0].classList.remove('fa-pause')
+  //   }
+  // }
+  // function mediaForward() {
+  //   clearInterval(intervalRwd)
+  //   rwd.classList.remove('running')
+  //   rwd.style.opacity = '1'
+
+  //   if (fwd.classList.contains('running')) {
+  //     fwd.classList.remove('running')
+  //     clearInterval(intervalFwd)
+  //     fwd.style.opacity = '1'
+  //     media.play()
+  //   } else {
+  //     fwd.classList.add('running')
+  //     fwd.style.opacity = '0.7'
+  //     media.pause()
+  //     intervalFwd = setInterval(playForward, 200)
+  //     play.childNodes[0].classList.add('fa-play')
+  //     play.childNodes[0].classList.remove('fa-pause')
+  //   }
+  // }
+  /*Interval Functions */
+
+  // function playBack() {
+  //   if (media.currentTime <= 3) {
+  //     rwd.classList.remove('running')
+  //     clearInterval(intervalRwd)
+  //     media.pause()
+  //   } else {
+  //     media.currentTime -= 3
+  //   }
+  // }
+  // function playForward() {
+  //   if (media.currentTime >= media.duration - 3) {
+  //     fwd.classList.remove('running')
+  //     clearInterval(intervalFwd)
+  //     media.pause()
+  //   } else {
+  //     media.currentTime += 3
+  //   }
+  // }
+
+  /*Add Media Event Listeners */
+  play.addEventListener('click', pausePlayMedia)
+  fwd.addEventListener('click', nextMedia)
+  rwd.addEventListener('click', prevMedia)
+  repeat.addEventListener('click', repeatSong)
+  random.addEventListener('click', randomSong)
+
+  /*checking if a song is done playing */
+  setInterval(() => {
+    if (media.currentTime == media.duration) {
+      nextMedia()
+    }
+  }, 5000)
 }
 
-// function mediaBackward() {
-//   clearInterval(intervalRwd)
-//   fwd.classList.remove('running')
-//   fwd.style.opacity = '1'
-
-//   if (rwd.classList.contains('running')) {
-//     rwd.classList.remove('running')
-//     rwd.style.opacity = '1'
-//     clearInterval(intervalFwd)
-//     media.play()
-//     play.childNodes[0].classList.remove('fa-play')
-//     play.childNodes[0].classList.add('fa-pause')
-//   } else {
-//     rwd.classList.add('running')
-//     rwd.style.opacity = '0.7'
-//     media.pause()
-//     intervalRwd = setInterval(playBack, 200)
-//     play.childNodes[0].classList.add('fa-play')
-//     play.childNodes[0].classList.remove('fa-pause')
-//   }
-// }
-// function mediaForward() {
-//   clearInterval(intervalRwd)
-//   rwd.classList.remove('running')
-//   rwd.style.opacity = '1'
-
-//   if (fwd.classList.contains('running')) {
-//     fwd.classList.remove('running')
-//     clearInterval(intervalFwd)
-//     fwd.style.opacity = '1'
-//     media.play()
-//   } else {
-//     fwd.classList.add('running')
-//     fwd.style.opacity = '0.7'
-//     media.pause()
-//     intervalFwd = setInterval(playForward, 200)
-//     play.childNodes[0].classList.add('fa-play')
-//     play.childNodes[0].classList.remove('fa-pause')
-//   }
-// }
-/*Interval Functions */
-
-// function playBack() {
-//   if (media.currentTime <= 3) {
-//     rwd.classList.remove('running')
-//     clearInterval(intervalRwd)
-//     media.pause()
-//   } else {
-//     media.currentTime -= 3
-//   }
-// }
-// function playForward() {
-//   if (media.currentTime >= media.duration - 3) {
-//     fwd.classList.remove('running')
-//     clearInterval(intervalFwd)
-//     media.pause()
-//   } else {
-//     media.currentTime += 3
-//   }
-// }
-
-/*Add Media Event Listeners */
-play.addEventListener('click', pausePlayMedia)
-fwd.addEventListener('click', nextMedia)
-rwd.addEventListener('click', prevMedia)
-repeat.addEventListener('click', repeatSong)
-random.addEventListener('click', randomSong)
-
-/*checking if a song is done playing */
-setInterval(() => {
-  if (media.currentTime == media.duration) {
-    nextMedia()
-  }
-}, 5000)
+musicTab.forEach((cur) => {
+  let libTemplate = `<tr>
+           <td class="lib-img">
+             <img src="img/cover/cover-${cur.id}.jpg" alt="music-cover">
+            </td>
+             <td class="lib-header"><h3>${cur.name}</h3></td>
+              <td class="lib-action-play"><i class="fa-solid fa-play"></i></td>
+              <td class="lib-action-fav"><i class="fa-solid fa-heart"></i></td>
+          </tr>
+          <span>&nbsp;</span>`
+  table.insertAdjacentHTML('afterbegin', libTemplate)
+})

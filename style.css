@@ -305,9 +305,13 @@ div.active {
   cursor: pointer;
 }
 /* Library Page */
+.lib-main__header {
+  height: 130vh;
+}
 .lib-container {
   position: absolute;
   width: 80%;
+  height: 80;
   top: 15%;
   left: 50%;
   transform: translateX(-50%);
@@ -315,6 +319,7 @@ div.active {
 }
 .table {
   width: 100%;
+  font-family: 'Raleway', sans-serif;
 }
 .lib-img {
   width: 5%;
@@ -384,6 +389,9 @@ div.active {
   .header {
     height: 140vh;
   }
+  .lib-main__header {
+    height: 170vh;
+  }
   .navigation ul {
     display: none;
   }
@@ -437,7 +445,7 @@ div.active {
   .lib-img {
     width: 10%;
   }
-  .lib-header {
+  .lib-header h3 {
     margin-left: 1rem;
   }
   .lib-action-play,
@@ -451,6 +459,9 @@ div.active {
   }
   .header {
     height: 100vh;
+  }
+  .lib-main__header {
+    height: 120vh;
   }
   .music-desc p {
     color: #222;
