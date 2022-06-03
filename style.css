@@ -306,7 +306,7 @@ div.active {
 }
 /* Library Page */
 .lib-main__header {
-  height: 135vh;
+  height: 140vh;
 }
 .lib-container {
   position: absolute;
@@ -354,11 +354,14 @@ td.hid-btn {
   display: none;
 }
 .td-active {
-  border: 1px solid #222;
   background: linear-gradient(to bottom right, #d9a7c7, #fffcdc);
   padding: 1rem 1rem;
   box-shadow: 0px 0.5rem 2rem rgba(0, 0, 0, 0.2);
   color: #222;
+}
+td {
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
 }
 /* MEDIA QEURIES */
 @media screen and (min-width: 1800px) {
