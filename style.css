@@ -502,4 +502,7 @@ td {
     border-spacing: 2px;
     padding: 2rem 1rem;
   }
+  .td-active {
+    background-repeat: no-repeat;
+  }
 }
