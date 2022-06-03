@@ -356,6 +356,7 @@ function libraryPlayBtn(event) {
     newIcon.nextElementSibling.childNodes[0].classList.toggle('fa-pause')
     newIcon.classList.add('hid-btn') // Hides the new generated icon
     newIcon.parentNode.classList.toggle('td-active')
+    newIcon.previousElementSibling.classList.remove('lib-header-bg')
     // check if it contains 'pause' class
     setInterval(() => {
       if (media.currentTime == media.duration) {
@@ -387,6 +388,9 @@ function libraryPlayBtn(event) {
   xEL.parentNode.previousElementSibling.classList.remove('hid-btn')
   xEL.parentNode.classList.add('hid-btn')
   xEL.parentNode.parentNode.classList.toggle('td-active')
+  xEL.parentNode.previousElementSibling.previousElementSibling.classList.add(
+    'lib-header-bg',
+  )
 }
 
 // second phase play and pause function

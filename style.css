@@ -332,6 +332,12 @@ div.active {
   font-size: 2rem;
   margin-left: 2.5rem;
 }
+.lib-header-bg {
+  background-image: url(img/playing.gif);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .lib-action-play,
 .lib-action-fav,
 .lib-action-play2 {
@@ -354,10 +360,7 @@ td.hid-btn {
   display: none;
 }
 .td-active {
-  background: url(img/playing.gif), linear-gradient(to bottom right, #000, #000);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-image: linear-gradient(to bottom right, #000, #000);
   padding: 1rem 1rem;
   box-shadow: 0px 0.5rem 2rem rgba(0, 0, 0, 0.2);
   color: #fff;
