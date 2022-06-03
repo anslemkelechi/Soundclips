@@ -297,67 +297,6 @@ if (musicID) {
     }
   }
 
-  // function mediaBackward() {
-  //   clearInterval(intervalRwd)
-  //   fwd.classList.remove('running')
-  //   fwd.style.opacity = '1'
-
-  //   if (rwd.classList.contains('running')) {
-  //     rwd.classList.remove('running')
-  //     rwd.style.opacity = '1'
-  //     clearInterval(intervalFwd)
-  //     media.play()
-  //     play.childNodes[0].classList.remove('fa-play')
-  //     play.childNodes[0].classList.add('fa-pause')
-  //   } else {
-  //     rwd.classList.add('running')
-  //     rwd.style.opacity = '0.7'
-  //     media.pause()
-  //     intervalRwd = setInterval(playBack, 200)
-  //     play.childNodes[0].classList.add('fa-play')
-  //     play.childNodes[0].classList.remove('fa-pause')
-  //   }
-  // }
-  // function mediaForward() {
-  //   clearInterval(intervalRwd)
-  //   rwd.classList.remove('running')
-  //   rwd.style.opacity = '1'
-
-  //   if (fwd.classList.contains('running')) {
-  //     fwd.classList.remove('running')
-  //     clearInterval(intervalFwd)
-  //     fwd.style.opacity = '1'
-  //     media.play()
-  //   } else {
-  //     fwd.classList.add('running')
-  //     fwd.style.opacity = '0.7'
-  //     media.pause()
-  //     intervalFwd = setInterval(playForward, 200)
-  //     play.childNodes[0].classList.add('fa-play')
-  //     play.childNodes[0].classList.remove('fa-pause')
-  //   }
-  // }
-  /*Interval Functions */
-
-  // function playBack() {
-  //   if (media.currentTime <= 3) {
-  //     rwd.classList.remove('running')
-  //     clearInterval(intervalRwd)
-  //     media.pause()
-  //   } else {
-  //     media.currentTime -= 3
-  //   }
-  // }
-  // function playForward() {
-  //   if (media.currentTime >= media.duration - 3) {
-  //     fwd.classList.remove('running')
-  //     clearInterval(intervalFwd)
-  //     media.pause()
-  //   } else {
-  //     media.currentTime += 3
-  //   }
-  // }
-
   /*Add Media Event Listeners */
   play.addEventListener('click', pausePlayMedia)
   fwd.addEventListener('click', nextMedia)
@@ -373,15 +312,99 @@ if (musicID) {
   }, 5000)
 }
 
+/*Library Functions */
+
+//Show music in library
 musicTab.forEach((cur) => {
-  let libTemplate = `<tr>
+  let libTemplate = `<tr id=${cur.id}>
            <td class="lib-img">
              <img src="img/cover/cover-${cur.id}.jpg" alt="music-cover">
             </td>
              <td class="lib-header"><h3>${cur.name}</h3></td>
+             <td class="lib-action-play2 hid-btn"><i class="fa-solid fa-pause"></i></td>
               <td class="lib-action-play"><i class="fa-solid fa-play"></i></td>
               <td class="lib-action-fav"><i class="fa-solid fa-heart"></i></td>
           </tr>
-          <span>&nbsp;</span>`
+          `
   table.insertAdjacentHTML('afterbegin', libTemplate)
 })
+
+//Play Media Event in Library
+function libraryPlayEvent() {
+  let libPlay = document.querySelectorAll('.lib-action-play')
+  let x = Array.prototype.slice.call(libPlay)
+  x.forEach((cur) => {
+    cur.addEventListener('click', libraryPlayBtn)
+  })
+}
+libraryPlayEvent()
+
+function libraryPlayBtn(event) {
+  console.log('touched')
+  var xID = event.target.parentNode.parentNode.id
+  var xPN = event.target.parentNode.parentNode
+  var xEL = event.target
+  // Checks if audio is currently in the Dom
+  var newAudio = document.querySelector('.audio')
+  if (newAudio) {
+    var newIcon = newAudio.parentNode.childNodes[6]
+    console.log(newIcon)
+    newAudio.pause() // Pauses the audio
+    newAudio.parentElement.removeChild(newAudio) // Removes the audio from the Dom
+    newIcon.nextElementSibling.classList.remove('hid-btn')
+    newIcon.nextElementSibling.childNodes[0].classList.toggle('fa-play')
+    newIcon.nextElementSibling.childNodes[0].classList.toggle('fa-pause')
+    newIcon.classList.add('hid-btn') // Hides the new generated icon
+    newIcon.parentNode.classList.toggle('td-active')
+    // check if it contains 'pause' class
+  }
+
+  // Create audio element
+  var audioTemplate = `<audio class="audio">
+            <source src="${musicTab[xID].media()}" type="audio/mp3">
+          </audio>`
+  xPN.insertAdjacentHTML('afterbegin', audioTemplate)
+  var playAud = document.querySelector('.audio')
+  playAud.load()
+
+  // Play and Pause Media
+  if (playAud.paused) {
+    playAud.play()
+    xEL.classList.toggle('fa-play')
+    xEL.classList.toggle('fa-pause')
+  } else {
+    playAud.pause()
+    xEL.classList.toggle('fa-play')
+    xEL.classList.toggle('fa-pause')
+  }
+  // Switches btn to play and pause second phase
+  xEL.parentNode.previousElementSibling.classList.remove('hid-btn')
+  xEL.parentNode.classList.add('hid-btn')
+  xEL.parentNode.parentNode.classList.toggle('td-active')
+}
+
+// second phase play and pause function
+function PlayMedia() {
+  let playMedia = document.querySelectorAll('.lib-action-play2')
+  let x = Array.prototype.slice.call(playMedia)
+  x.forEach((cur) => {
+    cur.addEventListener('click', playMediaBtn)
+  })
+}
+PlayMedia()
+
+// second Play and Pause Media event
+function playMediaBtn(event) {
+  var target = event.target
+  var playAud = document.querySelector('.audio')
+  if (playAud.paused) {
+    playAud.play()
+    target.classList.toggle('fa-play')
+    target.classList.toggle('fa-pause')
+  } else {
+    playAud.pause()
+    target.classList.toggle('fa-play')
+    target.classList.toggle('fa-pause')
+  }
+}
+//Library Media Functions
