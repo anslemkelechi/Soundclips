@@ -357,6 +357,12 @@ function libraryPlayBtn(event) {
     newIcon.classList.add('hid-btn') // Hides the new generated icon
     newIcon.parentNode.classList.toggle('td-active')
     // check if it contains 'pause' class
+    setInterval(() => {
+      if (media.currentTime == media.duration) {
+        newIcon.nextElementSibling.childNodes[0].classList.toggle('fa-play')
+        newIcon.nextElementSibling.childNodes[0].classList.toggle('fa-pause')
+      }
+    }, 5000)
   }
 
   // Create audio element
@@ -407,4 +413,5 @@ function playMediaBtn(event) {
     target.classList.toggle('fa-pause')
   }
 }
+
 //Library Media Functions
