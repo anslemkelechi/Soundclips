@@ -44,7 +44,8 @@ let musicID = document.querySelector('.music-container')
 let audioSrc = document.querySelector('.audio-src')
 let prevBtn = document.querySelector('.prev-btn')
 let nextBtn = document.querySelector('.next-btn')
-let table = document.querySelector('.table')
+let table = document.getElementById('table')
+let tableFav = document.getElementById('table-fav')
 
 /*Media Buttons */
 let media = document.querySelector('.audio')
@@ -280,8 +281,9 @@ if (musicID) {
   }
 
   function restoreMediaPlayer() {
-    play.childNodes[0].classList.add('fa-play')
-    play.childNodes[0].classList.remove('fa-pause')
+    media.play()
+    play.childNodes[0].classList.remove('fa-play')
+    play.childNodes[0].classList.add('fa-pause')
   }
 
   function repeatSong() {
@@ -315,8 +317,9 @@ if (musicID) {
 /*Library Functions */
 
 //Show music in library
-musicTab.forEach((cur) => {
-  let libTemplate = `<tr id=${cur.id}>
+if (table) {
+  musicTab.forEach((cur) => {
+    let libTemplate = `<tr id=${cur.id}>
            <td class="lib-img">
              <img src="img/cover/cover-${cur.id}.jpg" alt="music-cover">
             </td>
@@ -326,10 +329,62 @@ musicTab.forEach((cur) => {
               <td class="lib-action-fav"><i class="fa-solid fa-heart"></i></td>
           </tr>
           `
-  table.insertAdjacentHTML('afterbegin', libTemplate)
-})
+    table.insertAdjacentHTML('afterbegin', libTemplate)
+  })
+}
 
-//Play Media Event in Library
+//add music to favourite
+var favArr = [] // Array to store favourite songs
+// Set default content from local storage
+if (localStorage.getItem('fav')) {
+  favArr = JSON.parse(localStorage.getItem('fav'))
+}
+console.log(favArr)
+function addFav() {
+  let fav = document.querySelectorAll('.lib-action-fav')
+  let x = Array.prototype.slice.call(fav)
+  x.forEach((cur) => {
+    cur.addEventListener('click', addFavBtn)
+  })
+}
+addFav()
+
+function addFavBtn(event) {
+  var target = event.target
+  target.style.color = 'red'
+  var ID = target.parentNode.parentNode.id
+  favArr.push(ID) // Add song to favourite array
+  console.log(favArr)
+  pushFav() //push to local storage
+}
+
+//Push Elements in favourite array to local storage
+function pushFav() {
+  localStorage.setItem('fav', JSON.stringify(favArr))
+}
+
+// Show Items in favourite
+if (tableFav) {
+  //Print Item for local storage
+  let localFavArr = JSON.parse(localStorage.getItem('fav'))
+  //Convert element to number and Pass local Array into loop to show in favourite
+  localFavArr.forEach((cur) => {
+    var x = parseInt(cur)
+    let libTemplate = `<tr id=${musicTab[x].id}>
+           <td class="lib-img">
+             <img src="img/cover/cover-${musicTab[x].id}.jpg" alt="music-cover">
+            </td>
+             <td class="lib-header"><h3>${musicTab[x].name}</h3></td>
+             <td class="lib-action-play2 hid-btn"><i class="fa-solid fa-pause"></i></td>
+              <td class="lib-action-play"><i class="fa-solid fa-play"></i></td>
+              <td class="lib-action-fav"><i class="fa-solid fa-heart"></i></td>
+          </tr>
+          `
+    tableFav.insertAdjacentHTML('afterbegin', libTemplate)
+  })
+}
+
+//Play Media Event in Library/favorite
 function libraryPlayEvent() {
   let libPlay = document.querySelectorAll('.lib-action-play')
   let x = Array.prototype.slice.call(libPlay)
@@ -357,13 +412,6 @@ function libraryPlayBtn(event) {
     newIcon.classList.add('hid-btn') // Hides the new generated icon
     newIcon.parentNode.classList.toggle('td-active')
     newIcon.previousElementSibling.classList.remove('lib-header-bg')
-    // check if it contains 'pause' class
-    setInterval(() => {
-      if (media.currentTime == media.duration) {
-        newIcon.nextElementSibling.childNodes[0].classList.toggle('fa-play')
-        newIcon.nextElementSibling.childNodes[0].classList.toggle('fa-pause')
-      }
-    }, 5000)
   }
 
   // Create audio element
@@ -384,6 +432,21 @@ function libraryPlayBtn(event) {
     xEL.classList.toggle('fa-play')
     xEL.classList.toggle('fa-pause')
   }
+
+  // Check if audio is done playing
+  playAud.addEventListener('ended', () => {
+    xEL.parentNode.previousElementSibling.childNodes[0].classList.toggle(
+      'fa-play',
+    )
+    xEL.parentNode.previousElementSibling.childNodes[0].classList.toggle(
+      'fa-pause',
+    )
+    xEL.parentNode.previousElementSibling.previousElementSibling.classList.toggle(
+      'lib-header-bg',
+    )
+    xEL.parentNode.parentNode.classList.toggle('td-active')
+  })
+
   // Switches btn to play and pause second phase
   xEL.parentNode.previousElementSibling.classList.remove('hid-btn')
   xEL.parentNode.classList.add('hid-btn')
@@ -417,5 +480,3 @@ function playMediaBtn(event) {
     target.classList.toggle('fa-pause')
   }
 }
-
-//Library Media Functions
