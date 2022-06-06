@@ -41,6 +41,7 @@ let desc = document.querySelector('.desc-text')
 let musicCover = document.querySelector('.music-cover__img')
 let musicCoverCD = document.querySelector('.music')
 let musicID = document.querySelector('.music-container')
+let mainControl = document.querySelector('.main-control')
 let audioSrc = document.querySelector('.audio-src')
 let prevBtn = document.querySelector('.prev-btn')
 let nextBtn = document.querySelector('.next-btn')
@@ -56,6 +57,8 @@ let fwd = document.querySelector('.fwd')
 let random = document.querySelector('.random')
 let intervalFwd
 let intervalRwd
+
+var favArr = [] // Array to store favourite songs
 
 /* MEDIA ARRAY*/
 musicTab = [
@@ -223,6 +226,7 @@ if (musicID) {
     desc.textContent = id.desc
     musicCover.src = id.img()
     musicID.id = id.id
+    mainControl.id = id.id
     audioSrc.src = id.media()
     media.load()
     scaleAnimation()
@@ -254,11 +258,11 @@ if (musicID) {
     }
   }
 
-  /*Event Listener For Next Button */
-  nextBtn.addEventListener('click', nextMedia)
+  // /*Event Listener For Next Button */
+  // nextBtn.addEventListener('click', nextMedia)
 
-  /*Event Listener For Prev Button */
-  prevBtn.addEventListener('click', prevMedia)
+  // /*Event Listener For Prev Button */
+  // prevBtn.addEventListener('click', prevMedia)
 
   /*Media Functions */
   function randomSong() {
@@ -284,6 +288,9 @@ if (musicID) {
     media.play()
     play.childNodes[0].classList.remove('fa-play')
     play.childNodes[0].classList.add('fa-pause')
+    let homeFav = (document.querySelector(
+      '.home-fav',
+    ).childNodes[0].style.color = '#222')
   }
 
   function repeatSong() {
@@ -312,6 +319,13 @@ if (musicID) {
       nextMedia()
     }
   }, 5000)
+
+  //function for home favarite button
+  function homeAddFav() {
+    let homeFavBtn = document.querySelector('.home-fav')
+    homeFavBtn.addEventListener('click', addFavBtn)
+  }
+  homeAddFav()
 }
 
 /*Library Functions */
@@ -334,10 +348,10 @@ if (table) {
 }
 
 //add music to favourite
-var favArr = [] // Array to store favourite songs
 // Set default content from local storage
 if (localStorage.getItem('fav')) {
   favArr = JSON.parse(localStorage.getItem('fav'))
+  console.log(favArr)
 }
 console.log(favArr)
 function addFav() {
@@ -366,22 +380,30 @@ function pushFav() {
 // Show Items in favourite
 if (tableFav) {
   //Print Item for local storage
-  let localFavArr = JSON.parse(localStorage.getItem('fav'))
-  //Convert element to number and Pass local Array into loop to show in favourite
-  localFavArr.forEach((cur) => {
-    var x = parseInt(cur)
-    let libTemplate = `<tr id=${musicTab[x].id}>
+  if (localStorage.getItem('fav')) {
+    let localFavArr = JSON.parse(localStorage.getItem('fav'))
+    //Convert element to number and Pass local Array into loop to show in favourite
+    localFavArr.forEach((cur) => {
+      var x = parseInt(cur)
+      let libTemplate = `<tr id=${musicTab[x].id}>
            <td class="lib-img">
              <img src="img/cover/cover-${musicTab[x].id}.jpg" alt="music-cover">
             </td>
              <td class="lib-header"><h3>${musicTab[x].name}</h3></td>
              <td class="lib-action-play2 hid-btn"><i class="fa-solid fa-pause"></i></td>
               <td class="lib-action-play"><i class="fa-solid fa-play"></i></td>
-              <td class="lib-action-fav"><i class="fa-solid fa-heart"></i></td>
           </tr>
           `
-    tableFav.insertAdjacentHTML('afterbegin', libTemplate)
-  })
+      tableFav.insertAdjacentHTML('afterbegin', libTemplate)
+    })
+  } else {
+    let emptyFav = ` <div class="not-found">
+           <img src="img/lost.gif" alt="lost">
+           <h3>You are looking at confused man like you</h3>
+           <p>No Favorites song added, Please add from your Library</p>
+       </div>`
+    tableFav.insertAdjacentHTML('afterend', emptyFav)
+  }
 }
 
 //Play Media Event in Library/favorite

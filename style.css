@@ -311,7 +311,6 @@ div.active {
 .lib-container {
   position: absolute;
   width: 80%;
-  height: 80;
   top: 15%;
   left: 50%;
   transform: translateX(-50%);
@@ -368,6 +367,21 @@ td.hid-btn {
 td {
   border-top: 20px solid transparent;
   border-bottom: 20px solid transparent;
+}
+.not-found {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.not-found img {
+  width: 100%;
+}
+.not-found h3 {
+  font-size: 2.5rem;
+}
+.not-found p {
+  font-size: 1.5rem;
 }
 /* MEDIA QEURIES */
 @media screen and (min-width: 1800px) {
@@ -477,6 +491,10 @@ td {
   .lib-action-fav,
   .lib-action-play2 {
     width: 15%;
+    font-size: 4rem;
+  }
+  .not-found {
+    width: 90%;
   }
 }
 @media screen and (max-width: 480px) {
