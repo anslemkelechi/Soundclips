@@ -348,7 +348,7 @@ if (table) {
 }
 
 //add music to favourite
-// Set default content from local storage
+// Set default content from local storage so that on init, the favarr will contain values from previous additions
 if (localStorage.getItem('fav')) {
   favArr = JSON.parse(localStorage.getItem('fav'))
   console.log(favArr)
@@ -382,8 +382,11 @@ if (tableFav) {
   //Print Item for local storage
   if (localStorage.getItem('fav')) {
     let localFavArr = JSON.parse(localStorage.getItem('fav'))
-    //Convert element to number and Pass local Array into loop to show in favourite
-    localFavArr.forEach((cur) => {
+    //Filter array for duplicate values then Convert element to number and Pass local Array into loop to show in favourite
+    filterArr = localFavArr.filter((c, index) => {
+      return localFavArr.indexOf(c) === index
+    })
+    filterArr.forEach((cur) => {
       var x = parseInt(cur)
       let libTemplate = `<tr id=${musicTab[x].id}>
            <td class="lib-img">
